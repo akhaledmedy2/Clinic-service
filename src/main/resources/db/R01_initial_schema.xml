@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <changeSet id="01" author="SAB">
+        <createTable tableName="patient">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="name" type="varchar(255)"/>
+            <column name="phone" type="varchar(20)">
+                <constraints unique="true"/>
+            </column>
+            <column name="email" type="varchar(50)">
+                <constraints unique="true"/>
+            </column>
+            <column name="creation_date" type="timestamp"/>
+            <column name="update_date" type="timestamp"/>
+        </createTable>
+
+        <createTable tableName="appointment">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="patient_id" type="bigint">
+                <constraints primaryKey="true" foreignKeyName="fk_patient_appointment" references="patient(id)"/>
+            </column>
+            <column name="cancellation_reason" type="varchar(255)"/>
+            <column name="appointment_id" type="bigint"/>
+            <column name="creation_date" type="timestamp"/>
+            <column name="update_date" type="timestamp"/>
+            <column name="appointment_date" type="timestamp"/>
+            <column name="running" type="boolean"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet author="SAB" id="tagDatabase">
+        <tagDatabase tag="v0.0.1"/>
+    </changeSet>
+</databaseChangeLog>
